@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ListingController;
+use App\Models\Listing;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/user/{id}', function ($id){
+    return response("USER ID IS:" . $id);
 });
+
+// Get All Listing
+Route::get('/', [ListingController::class, 'index']);
+
+// Get Single Listing
+Route::get('listings/{listing}', [ListingController::class, 'show']);
