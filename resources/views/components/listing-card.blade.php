@@ -1,6 +1,6 @@
 @props(['listing'])
 <x-card>
-        <img src="{{asset($listing['imageUrl'])}}" class="card-img-top" alt="...">
+        <img src="{{$listing->imageUrl ? asset('storage/' . $listing->imageUrl) : asset('/images/no-image.svg')}}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{ $listing['title'] }}</h5>
             <p class="card-text">{{ $listing['description'] }}</p>
