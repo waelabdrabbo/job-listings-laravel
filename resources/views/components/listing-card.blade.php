@@ -14,6 +14,6 @@
             <li class="list-group-item">{{ $listing['company'] }}</li>
         </ul>
         <div class="card-footer">
-            <a href="/listings/{{ $listing['id'] }}" class="btn btn-primary">Go somewhere</a>
+            <a href="/listings/{{ $listing['id'] }}" class="btn btn-primary">See more</a>
         </div>
 </x-card>

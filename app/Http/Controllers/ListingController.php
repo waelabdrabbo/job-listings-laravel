@@ -47,6 +47,7 @@ class ListingController extends Controller
         if ($request->hasFile('imageUrl')) {
             $formFields['imageUrl'] = $request->file('imageUrl')->store('images', 'public');
         }
+        $formFields['user_id'] = auth()->id();
         Listing::create($formFields);
         return redirect('/')->with('message', 'Job Created Successfully');
     }
@@ -62,6 +63,12 @@ class ListingController extends Controller
     // Update Listing Form Data
     public function update(Request $request, Listing $listing)
     {
+        // ownership
+
+        if ($listing->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Request');
+        }
+
         $formFields = $request->validate(([
             'title' => 'required',
             'company' => 'required',
@@ -82,7 +89,17 @@ class ListingController extends Controller
 
     public function destroy(Listing $listing)
     {
+        if ($listing->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Request');
+        }
         $listing->delete();
         return redirect('/')->with('message', 'Job Deleted Successfully');
+    }
+
+    // Manage Listings
+
+    public function manage()
+    {
+        return view('listings.manage', ['listings' => auth()->user()->listings()->get()]);
     }
 }

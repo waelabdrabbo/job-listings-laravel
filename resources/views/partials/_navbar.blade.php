@@ -5,11 +5,19 @@
         </a>
 
         <ul class="nav nav-pills">
+            @auth
+            <li class="navbar-text"><span class="me-3">Welcome {{auth()->user()->name}}</span></li>
             <li class="nav-item"><a href="/listings/create" class="nav-link active" aria-current="page">Post a Job</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="/listings/manage" class="nav-link">Manage Jobs <i class="bi bi-gear"></i></a></li>
+            <form method="POST" action="/logout">
+            @csrf
+            <button class="btn btn-link text-decoration-none" type="submit">Logout <i class="bi bi-box-arrow-right"></i></button>
+            </form>
+            </li>
+            @else
+            <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+            <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+            @endauth
         </ul>
     </header>
 </div>

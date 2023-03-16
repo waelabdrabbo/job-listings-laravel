@@ -15,16 +15,21 @@
                 <x-listing-tags :tagsCsv="$listing->tags" />
                 <li class="list-group-item">{{ $listing['location'] }}</li>
                 <li class="list-group-item">{{ $listing['company'] }}</li>
-                <li class="list-group-item">
-                    <a href="/listings/{{ $listing->id }}/edit" class="btn btn-primary">Edit <i class="bi bi-pencil"></i>
-                    </a>
-                    <form method="POST" action="/listings/{{$listing->id}}">
-                    @csrf
-                    @method("DELETE")
-                    <button type="submit" class="btn btn-danger">Delete <i class="bi bi-trash"></i></button>
-                    </form>
-                    </a>
-                </li>
+                @auth
+                    @if ($listing->user_id == auth()->id())
+                        <div class="card-footer">
+                            <a href="/listings/{{ $listing->id }}/edit" class="btn btn-primary">Edit <i
+                                    class="bi bi-pencil"></i>
+                            </a>
+                            <form style="display: inline-block;" method="POST" action="/listings/{{ $listing->id }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete <i class="bi bi-trash"></i></button>
+                            </form>
+                            </a>
+                        </div>
+                    @endif
+                @endauth
             </ul>
         </x-card>
     </div>
